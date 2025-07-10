@@ -31,6 +31,10 @@ export class Conta{
         return this._saldo;
     }
 
+    public setSaldo(valor: number): number {
+        return this._saldo = valor;
+    }
+
      public depositar(valor: number): void {
         this._saldo += valor;
     }

@@ -2,11 +2,17 @@ import ler = require("readline-sync");
 import { colors } from "./src/util/colors";
 import { Conta } from "./src/model/conta";
 
+import { ContaCorrente } from "./src/model/contaCorrente";
+import { ContaPoupanca } from "./src/model/contaPoupanca";
+
 const conta1 = new Conta(1, "Alceu Junior", 1000);
 const conta2 = new Conta(2, "Mariana Isabel", 2000);
-const contas: Conta[] = [conta1, conta2];
+const contaCorrente = new ContaCorrente(3, "Juliana", 3000, 10000);
+const contaPoupanca = new ContaPoupanca(4, "Julio", 2500, 10);
+const contas: Conta[] = [conta1, conta2, contaCorrente, contaPoupanca];
 
-//const contas: Conta[] = []; //Array que guarda as contas
+//const contas: Conta[] = []; //Array que guarda as contas2
+
 //let proximoNumeroConta = 1;
 
 export function main() {
