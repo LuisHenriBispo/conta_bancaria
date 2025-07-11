@@ -1,9 +1,8 @@
 import ler = require("readline-sync");
 import { colors } from "./src/util/colors";
-import { Conta } from "./src/model/conta";
-
-import { ContaCorrente } from "./src/model/contaCorrente";
-import { ContaPoupanca } from "./src/model/contaPoupanca";
+import { Conta } from "./src/model/Conta";
+import { ContaCorrente } from "./src/model/ContaCorrente";
+import { ContaPoupanca } from "./src/model/ContaPoupanca";
 
 const conta1 = new Conta(1, "Alceu Junior", 1000);
 const conta2 = new Conta(2, "Mariana Isabel", 2000);
