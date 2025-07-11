@@ -1,4 +1,4 @@
-export class Conta{
+export abstract class Conta{
     private _numeroConta: number;
     
     private _titular: string;

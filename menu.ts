@@ -4,11 +4,12 @@ import { Conta } from "./src/model/Conta";
 import { ContaCorrente } from "./src/model/ContaCorrente";
 import { ContaPoupanca } from "./src/model/ContaPoupanca";
 
-const conta1 = new Conta(1, "Alceu Junior", 1000);
-const conta2 = new Conta(2, "Mariana Isabel", 2000);
+// const conta1 = new Conta(1, "Alceu Junior", 1000);
+// const conta2 = new Conta(2, "Mariana Isabel", 2000);
 const contaCorrente = new ContaCorrente(3, "Juliana", 3000, 10000);
 const contaPoupanca = new ContaPoupanca(4, "Julio", 2500, 10);
-const contas: Conta[] = [conta1, conta2, contaCorrente, contaPoupanca];
+//const contas: Conta[] = [conta1, conta2, contaCorrente, contaPoupanca];
+const contas: Conta[] = [contaCorrente, contaPoupanca];
 
 //const contas: Conta[] = []; //Array que guarda as contas2
 
