@@ -3,6 +3,7 @@ import { colors } from "./src/util/colors";
 import { Conta } from "./src/model/Conta";
 import { ContaCorrente } from "./src/model/ContaCorrente";
 import { ContaPoupanca } from "./src/model/ContaPoupanca";
+import { ContaController } from "./src/controller/ContaController";
 
 // const conta1 = new Conta(1, "Alceu Junior", 1000);
 // const conta2 = new Conta(2, "Mariana Isabel", 2000);
@@ -16,6 +17,11 @@ const contas: Conta[] = [contaCorrente, contaPoupanca];
 //let proximoNumeroConta = 1;
 
 export function main() {
+    let controller : ContaController = new ContaController();
+
+    controller.cadastrar(contaCorrente);
+    controller.cadastrar(contaPoupanca);
+
     let opcao: number;
 
     while (true) {
@@ -56,7 +62,8 @@ export function main() {
             case 2:
                 console.log(colors.fg.green + "-------------------------------------------------------------------------------");
                 console.log("\n\nListar todas as contas\n");
-                contas.forEach((conta) => conta.listar());
+                //contas.forEach((conta) => conta.listar());
+                controller.listarContas();
                 console.log(colors.fg.green + "-------------------------------------------------------------------------------");
                 break;
 
@@ -64,13 +71,17 @@ export function main() {
                 console.log("\n\nConsultar dados da conta - por número\n\n");
 
                 const numeroConsulta = ler.questionInt("Informe o número da conta: ");
-                const contaConsulta = contas.find(conta => conta.getNumero() === numeroConsulta);
+                //const contaConsulta = contas.find(conta => conta.getNumero() === numeroConsulta);
 
-                if (contaConsulta) {
-                    contaConsulta.listar();
-                } else {
-                    console.log("Conta não encontrada.");
-                }
+                // if (contaConsulta) {
+                //     contaConsulta.listar();
+                // } else {
+                //     console.log("Conta não encontrada.");
+                // }
+
+                const contaConsulta = controller.procurarPorNumero(numeroConsulta);
+                if (contaConsulta) contaConsulta.listar();
+                else console.log("Conta não encontrada.");
                 break;
 
             case 4:
@@ -85,14 +96,15 @@ export function main() {
                 console.log("\n\nSaque\n");
                 const numeroSaque = ler.questionInt("Número da conta: ");
                 const valorSaque = ler.questionFloat("Valor para saque: ");
-                const contaSaque = contas.find((conta) => conta.getNumero() === numeroSaque);
+                controller.sacar(numeroSaque, valorSaque);
+                // const contaSaque = contas.find((conta) => conta.getNumero() === numeroSaque);
 
-                if (contaSaque) {
-                    if (contaSaque.sacar(valorSaque)) {
-                        console.log("Saque realizado com sucesso!");
-                        console.log(`Saldo atual: R$ ${contaSaque.getSaldo().toFixed(2)}`);
-                    }
-                }
+                // if (contaSaque) {
+                //     if (contaSaque.sacar(valorSaque)) {
+                //         console.log("Saque realizado com sucesso!");
+                //         console.log(`Saldo atual: R$ ${contaSaque.getSaldo().toFixed(2)}`);
+                //     }
+                // }
                 break;
 
             case 7:
@@ -100,15 +112,16 @@ export function main() {
 
                 const numeroDeposito = ler.questionInt("Número da conta: ");
                 const valorDeposito = ler.questionFloat("Valor para deposito: ");
-                const contaDeposito = contas.find((conta) => conta.getNumero() === numeroDeposito);
+                controller.depositar(numeroDeposito, valorDeposito);
+                // const contaDeposito = contas.find((conta) => conta.getNumero() === numeroDeposito);
 
-                if (contaDeposito) {
-                    contaDeposito.depositar(valorDeposito);
-                    console.log(`Saldo atual: R$ ${contaDeposito.getSaldo().toFixed(2)}`);
-                    console.log("Deposito realizado com sucesso!");
-                } else {
-                    console.log("Conta nao encontrada.");
-                }
+                // if (contaDeposito) {
+                //     contaDeposito.depositar(valorDeposito);
+                //     console.log(`Saldo atual: R$ ${contaDeposito.getSaldo().toFixed(2)}`);
+                //     console.log("Deposito realizado com sucesso!");
+                // } else {
+                //     console.log("Conta nao encontrada.");
+                // }
                 break;
 
             case 8:
@@ -117,21 +130,22 @@ export function main() {
                 const numeroOrigem = ler.questionInt("Número da conta de origem: ");
                 const numeroDestino = ler.questionInt("Número da conta de destino: ");
                 const valorTransferencia = ler.questionFloat("Valor para transferência: ");
+                controller.transferir(numeroOrigem, numeroDestino, valorTransferencia);
 
-                const contaOrigem = contas.find(conta => conta.getNumero() === numeroOrigem);
-                const contaDestino = contas.find(conta => conta.getNumero() === numeroDestino);
+                // const contaOrigem = contas.find(conta => conta.getNumero() === numeroOrigem);
+                // const contaDestino = contas.find(conta => conta.getNumero() === numeroDestino);
 
-                if (!contaOrigem || !contaDestino) {
-                    console.log("Conta de origem ou destino não encontrada.");
-                    break;
-                }
+                // if (!contaOrigem || !contaDestino) {
+                //     console.log("Conta de origem ou destino não encontrada.");
+                //     break;
+                // }
 
-                if (contaOrigem.sacar(valorTransferencia)) {
-                    contaDestino.depositar(valorTransferencia);
-                    console.log("Transferência realizada com sucesso!");
-                    console.log(`Saldo da conta ${contaOrigem.getNumero()}: R$ ${contaOrigem.getSaldo().toFixed(2)}`);
-                    console.log(`Saldo da conta ${contaDestino.getNumero()}: R$ ${contaDestino.getSaldo().toFixed(2)}`);
-                }
+                // if (contaOrigem.sacar(valorTransferencia)) {
+                //     contaDestino.depositar(valorTransferencia);
+                //     console.log("Transferência realizada com sucesso!");
+                //     console.log(`Saldo da conta ${contaOrigem.getNumero()}: R$ ${contaOrigem.getSaldo().toFixed(2)}`);
+                //     console.log(`Saldo da conta ${contaDestino.getNumero()}: R$ ${contaDestino.getSaldo().toFixed(2)}`);
+                // }
 
                 break;
 
