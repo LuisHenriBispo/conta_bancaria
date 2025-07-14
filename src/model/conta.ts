@@ -42,6 +42,10 @@ export abstract class Conta{
     public getNumero(): number {
         return this._numeroConta;
     }
+    
+    public setNumero(numero: number): void {
+        this._numeroConta = numero;
+    }
 
     public getTitular(): string {
         return this._titular;

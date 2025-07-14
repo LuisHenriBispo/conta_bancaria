@@ -13,6 +13,7 @@ export class ContaController implements ContaRepository {
     }
 
     public cadastrar(conta: Conta): void {
+        conta.setNumero(this.proximoNumero++);
         this.listaContas.push(conta);
     }
 

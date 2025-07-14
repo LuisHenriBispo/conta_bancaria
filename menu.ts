@@ -57,12 +57,31 @@ export function main() {
         switch (opcao) {
             case 1:
                 console.log("\n\nCriar conta\n\n");
+
+                const tipoConta = ler.questionInt("Digite o tipo de conta (1 - Corrente, 2 - Poupança): ");
+                const nomeTitular = ler.question("Nome do titular: ");
+                const saldoInicial = ler.questionFloat("Saldo inicial: ");
+
+                let novaConta: Conta;
+
+                if (tipoConta === 1) {
+                    const limite = ler.questionFloat("Informe o limite: ");
+                    novaConta = new ContaCorrente(5, nomeTitular, saldoInicial, limite);
+                } else if (tipoConta === 2) {
+                    const aniversario = ler.questionInt("Informe o dia do aniversário da poupança: ");
+                    novaConta = new ContaPoupanca(5, nomeTitular, saldoInicial, aniversario);
+                } else {
+                    console.log("Tipo de conta inválido!");
+                    break;
+                }
+
+                controller.cadastrar(novaConta);
+                console.log("Conta criada com sucesso!");
                 break;
 
             case 2:
                 console.log(colors.fg.green + "-------------------------------------------------------------------------------");
                 console.log("\n\nListar todas as contas\n");
-                //contas.forEach((conta) => conta.listar());
                 controller.listarContas();
                 console.log(colors.fg.green + "-------------------------------------------------------------------------------");
                 break;
@@ -71,13 +90,6 @@ export function main() {
                 console.log("\n\nConsultar dados da conta - por número\n\n");
 
                 const numeroConsulta = ler.questionInt("Informe o número da conta: ");
-                //const contaConsulta = contas.find(conta => conta.getNumero() === numeroConsulta);
-
-                // if (contaConsulta) {
-                //     contaConsulta.listar();
-                // } else {
-                //     console.log("Conta não encontrada.");
-                // }
 
                 const contaConsulta = controller.procurarPorNumero(numeroConsulta);
                 if (contaConsulta) contaConsulta.listar();
@@ -86,10 +98,23 @@ export function main() {
 
             case 4:
                 console.log("\n\nAtualizar dados da conta\n\n");
+                const numeroAtualizar = ler.questionInt("Informe o número da conta: ");
+                const contaAtualizar = controller.procurarPorNumero(numeroAtualizar);
+
+                if (contaAtualizar) {
+                    const novoNome = ler.question("Novo nome do titular: ");
+                    contaAtualizar.setTitular(novoNome);
+                    controller.atualizar(contaAtualizar);
+                    console.log("Dados atualizados com sucesso.");
+                } else {
+                    console.log("Conta não encontrada.");
+                }
                 break;
 
             case 5:
                 console.log("\n\nApagar uma conta\n\n");
+                const numeroExcluir = ler.questionInt("Informe o número da conta a ser excluída: ");
+                controller.deletar(numeroExcluir);
                 break;
 
             case 6:
@@ -97,14 +122,6 @@ export function main() {
                 const numeroSaque = ler.questionInt("Número da conta: ");
                 const valorSaque = ler.questionFloat("Valor para saque: ");
                 controller.sacar(numeroSaque, valorSaque);
-                // const contaSaque = contas.find((conta) => conta.getNumero() === numeroSaque);
-
-                // if (contaSaque) {
-                //     if (contaSaque.sacar(valorSaque)) {
-                //         console.log("Saque realizado com sucesso!");
-                //         console.log(`Saldo atual: R$ ${contaSaque.getSaldo().toFixed(2)}`);
-                //     }
-                // }
                 break;
 
             case 7:
@@ -113,15 +130,6 @@ export function main() {
                 const numeroDeposito = ler.questionInt("Número da conta: ");
                 const valorDeposito = ler.questionFloat("Valor para deposito: ");
                 controller.depositar(numeroDeposito, valorDeposito);
-                // const contaDeposito = contas.find((conta) => conta.getNumero() === numeroDeposito);
-
-                // if (contaDeposito) {
-                //     contaDeposito.depositar(valorDeposito);
-                //     console.log(`Saldo atual: R$ ${contaDeposito.getSaldo().toFixed(2)}`);
-                //     console.log("Deposito realizado com sucesso!");
-                // } else {
-                //     console.log("Conta nao encontrada.");
-                // }
                 break;
 
             case 8:
@@ -131,21 +139,6 @@ export function main() {
                 const numeroDestino = ler.questionInt("Número da conta de destino: ");
                 const valorTransferencia = ler.questionFloat("Valor para transferência: ");
                 controller.transferir(numeroOrigem, numeroDestino, valorTransferencia);
-
-                // const contaOrigem = contas.find(conta => conta.getNumero() === numeroOrigem);
-                // const contaDestino = contas.find(conta => conta.getNumero() === numeroDestino);
-
-                // if (!contaOrigem || !contaDestino) {
-                //     console.log("Conta de origem ou destino não encontrada.");
-                //     break;
-                // }
-
-                // if (contaOrigem.sacar(valorTransferencia)) {
-                //     contaDestino.depositar(valorTransferencia);
-                //     console.log("Transferência realizada com sucesso!");
-                //     console.log(`Saldo da conta ${contaOrigem.getNumero()}: R$ ${contaOrigem.getSaldo().toFixed(2)}`);
-                //     console.log(`Saldo da conta ${contaDestino.getNumero()}: R$ ${contaDestino.getSaldo().toFixed(2)}`);
-                // }
 
                 break;
 
